@@ -24,13 +24,19 @@ Cypress.Commands.add('fillMandatoryFieldAndSubmit',  user => {
 
 
  Cypress.Commands.add('pickRandomOption', () => {
-    cy.get('select')
+
+  const selectElement = cy.get('select').as('select');
+
+  selectElement
   .find('option') // Encontra todas as opções
   .then(($options) => {
     const randomIndex = Math.floor(Math.random() * $options.length); // Gera um índice aleatório
     const randomValue = $options[randomIndex].value; // Obtém o valor da opção aleatória
     
-    cy.get('select').select(randomValue); // Seleciona a opção aleatória
+    
+    cy.get('@select')
+    .invoke('show')
+    .select(randomValue); // Seleciona a opção aleatória
   });   
 
  })
